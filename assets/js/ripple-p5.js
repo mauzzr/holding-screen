@@ -33,7 +33,6 @@ function setup() {
 function draw() {
     background("#292a2b");
     if (performance.now() > nextDrop) {
-        console.log("drop");
         let row = Math.floor(1 + Math.random() * (textRows - 2));
         let col = Math.floor(1 + Math.random() * (textCols - 2));
         buf1[row * textCols + col] = DROP_STRENGTH;
@@ -61,8 +60,6 @@ function draw() {
 }
 
 function mapToChar(num) {
-    // m[num/4 % 5]
-
     const CHARSET = "*$%#@";
     let charIndex = Math.floor(num * CHARSET.length / DROP_STRENGTH);
 
