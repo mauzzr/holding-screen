@@ -8,15 +8,11 @@
     webSocket.onopen = function (event) {
         let nick = "NICK " + username;
         let join = "JOIN #mauzzr";
-        let p = document.createElement("p");
 
-        console.log("Socket open with event:", event);
-        p.innerHTML = "> " + nick;
-        container.appendChild(p);
+        console.log("WebSocket open with event:", event);
+        renderMessage(false, nick);
         webSocket.send(nick);
-        p = document.createElement("p");
-        p.innerHTML = "> " + join;
-        container.appendChild(p);
+        renderMessage(false, join);
         webSocket.send(join);
     }
 
@@ -25,23 +21,31 @@
     }
 
     webSocket.onclose = function() {
-        console.log("Websocket closed");
+        console.log("WebSocket closed");
     }
 
     webSocket.onmessage = function (event) {
-        let p = document.createElement("p");
-
-        p.innerHTML = "< " + event.data;
-        container.appendChild(p);
+        renderMessage(true, event.data);
 
         if (event.data.startsWith("PING :tmi.twitch.tv")) {
             let response = "PONG :tmi.twitch.tv";
-            p = document.createElement("p");
-            p.innerHTML = "> " + response;
+            renderMessage(false, response);
             webSocket.send(response);
-            container.appendChild(p);
         }
+
         container.scrollTop = container.scrollHeight;
+    }
+
+    function renderMessage(isIncoming, data) {
+        let p = document.createElement("p");
+
+        if (isIncoming) {
+            p.appendChild(document.createTextNode("< " + data));
+        } else {
+            p.appendChild(document.createTextNode("> " + data));
+        }
+
+        container.appendChild(p);
     }
     /*
     setTimeout(function(){

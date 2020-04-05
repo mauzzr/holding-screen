@@ -9,11 +9,16 @@
         if (pair.length == 2) {
             switch(pair[0]) {
                 case "m":
-                    message = pair[1];
-                    container.innerHTML = decodeURI(message);
+                    message = decodeURI(pair[1]);
+                    renderMessage(message);
                     break;
                 default:
             }
         }
+    }
+
+    function renderMessage(message) {
+        let text = document.createTextNode(message);
+        container.appendChild(text);
     }
 })();
