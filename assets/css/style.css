@@ -22,3 +22,7 @@ body {
     font-size: 16px;
     overflow: hidden;
 }
+
+#message {
+    padding: 20px;
+}
